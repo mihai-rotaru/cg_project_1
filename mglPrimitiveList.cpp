@@ -1,21 +1,21 @@
 #include "mglPrimitiveList.h"
 
-void mglPrimitiveList::add_front( const mglPrimitive& prim )
+void mglPrimitiveList::add_front( mglPrimitive* p_prim )
 {
-    primitives.push_front( prim );
+    primitives.push_front( p_prim );
 }
 
-void mglPrimitiveList::add_back( const mglPrimitive& prim )
+void mglPrimitiveList::add_back( mglPrimitive* p_prim )
 {
-    primitives.push_back( prim );
+    primitives.push_back( p_prim );
 }
 
 void mglPrimitiveList::draw()
 {
-    list<mglPrimitive>::iterator i;
+    list<mglPrimitive*>::iterator i;
 
     for( i=primitives.begin(); i != primitives.end(); ++i )
-        (*i).draw();
+        (*i)->draw();
 }
 
 void mglPrimitiveList::scale( float f )

@@ -7,10 +7,10 @@ using namespace std;
 class mglPrimitiveList
 {
 public:
-    list<mglPrimitive> primitives;
+    list<mglPrimitive*> primitives;
 
-    void add_front( const mglPrimitive& p );
-    void add_back(  const mglPrimitive& p );
+    void add_front( mglPrimitive* p );
+    void add_back(  mglPrimitive* p );
     
     void draw();
     void scale( float );
