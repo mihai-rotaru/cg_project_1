@@ -1,5 +1,5 @@
 #include "mglPrimitive.h"
-//#include "mgl_structs.h"
+#include "mglLine.h"
 #include <list>
 using namespace std;
 
@@ -11,7 +11,9 @@ public:
 
     void add_front( mglPrimitive* p );
     void add_back(  mglPrimitive* p );
-    
+
+    void add_line( int x1, int y1, int x2, int y2 );     
+
     void draw();
     void scale( float );
     void rotate( float );

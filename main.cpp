@@ -59,6 +59,8 @@ void display( void )
     mglPrimitiveList letter_M;
     letter_M.add_front( &line1 );
     letter_M.add_front( &line2 );
+    letter_M.add_line( 150, 200, 200, 300 );
+    letter_M.add_line( 200, 300, 200, 100 );
     letter_M.draw();
 
     PrintText( 20, 20, "TEST" );

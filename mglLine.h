@@ -1,3 +1,5 @@
+#ifndef _MGL_LINE
+#define _MGL_LINE
 #include "mglPrimitive.h"
 
 class mglLine : virtual public mglPrimitive
@@ -22,3 +24,4 @@ public:
 private:
     int x1,y1,x2,y2;
 };
+#endif
