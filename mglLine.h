@@ -1,6 +1,6 @@
 #include "mglPrimitive.h"
 
-class mglLine : public mglPrimitive
+class mglLine : virtual mglPrimitive
 {
 public:
     // getters and setters

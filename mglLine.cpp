@@ -1,6 +1,6 @@
 #include <GL/glu.h>
 #include "mglLine.h"
-#include "mgl_structs.h"
+//#include "mgl_structs.h"
 
 mglLine::mglLine( int _x1, int _y1, int _x2, int _y2 )
 {
