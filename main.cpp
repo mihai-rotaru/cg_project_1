@@ -15,11 +15,11 @@ void display( void )
 
     // draw a line from point( 100,150 ) to point( 200, 300 )
     glBegin( GL_LINE_STRIP );
-	    glVertex2i( 100,300 );
 	    glVertex2i( 100,100 );
+	    glVertex2i( 100,300 );
 	    glVertex2i( 150,200 );
-	    glVertex2i( 200,100 );
 	    glVertex2i( 200,300 );
+	    glVertex2i( 200,100 );
     glEnd();
 
     // keep showing( flushing ) line on the screen instead of showing just once.
