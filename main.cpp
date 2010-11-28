@@ -4,7 +4,10 @@
 //
 #include <GL/glut.h>
 #include <GL/glu.h>
+
 #include <iostream>
+#include <list>
+
 #include "mglLine.h"
 using namespace std;
 
