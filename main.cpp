@@ -8,6 +8,26 @@
 #include "mglLine.h"
 using namespace std;
 
+void PrintText( int nX, int nY, char* pszText )
+{
+    int lines;
+    char *p;
+
+    glColor3ub( 150, 150, 150 );
+    glRasterPos2i( nX, nY );
+
+    for( p=pszText, lines=0; *p; p++ )
+    {
+        if( *p == '\n' )
+        {
+            lines++;
+            glRasterPos2i( nX, nY-(lines*18) );
+        }
+
+        glutBitmapCharacter( GLUT_BITMAP_HELVETICA_18,  *p );
+    }
+}
+
 void display( void )
 {
     // clear all pixels
@@ -26,11 +46,16 @@ void display( void )
 //    glEnd();
 
     // keep showing( flushing ) line on the screen instead of showing just once.
-    mglLine line1( 100,100,200,200 );
+    mglLine line1( 100,100,100,300 );
+    mglLine line2( 100,300,150,200 );
     line1.draw();
+    line2.draw();
+
+    PrintText( 20, 20, "FUCK" );
+    
 
     glFlush();
-    // glutPostRedisplay();
+    glutPostRedisplay();
 }
 
 void init( void )
