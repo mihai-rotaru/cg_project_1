@@ -52,10 +52,16 @@ void display( void )
     // keep showing( flushing ) line on the screen instead of showing just once.
     mglLine line1( 100,100,100,300 );
     mglLine line2( 100,300,150,200 );
-    line1.draw();
-    line2.draw();
+    //line1.draw();
+    //line2.draw();
 
-    PrintText( 20, 20, "FUCK" );
+    // using the new classes
+    mglPrimitiveList letter_M;
+    letter_M.add_front( &line1 );
+    letter_M.add_front( &line2 );
+    letter_M.draw();
+
+    PrintText( 20, 20, "TEST" );
     
 
     glFlush();
