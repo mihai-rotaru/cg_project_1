@@ -1,3 +1,6 @@
+#ifndef _MGL_PRIMITIVE
+#define _MGL_PRIMITIVE
+
 #include "mgl_structs.h"
 
 class mglPrimitive
@@ -8,4 +11,5 @@ public:
     virtual void scale( float factor )=0;
     virtual void rotate( float angle )=0;
     virtual void move( int x_dist, int y_dist )=0;
-};    
+};
+#endif

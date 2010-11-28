@@ -1,3 +1,5 @@
+#ifndef _MGL_STRUCTS
+#define _MGL_STRUCTS
 struct mglPoint
 {
     int x;
@@ -10,3 +12,4 @@ struct mglColor3f
     float Green;
     float Blue;
 };
+#endif

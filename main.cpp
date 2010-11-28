@@ -9,6 +9,7 @@
 #include <list>
 
 #include "mglLine.h"
+#include "mglPrimitiveList.h"
 using namespace std;
 
 void PrintText( int nX, int nY, char* pszText )
