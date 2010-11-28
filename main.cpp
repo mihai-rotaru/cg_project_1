@@ -4,6 +4,9 @@
 //
 #include <GL/glut.h>
 #include <GL/glu.h>
+#include <iostream>
+#include "mglLine.h"
+using namespace std;
 
 void display( void )
 {
