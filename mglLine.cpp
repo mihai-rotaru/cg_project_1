@@ -1,3 +1,4 @@
+#include <GL/glu.h>
 #include "mglLine.h"
 #include "mgl_structs.h"
 

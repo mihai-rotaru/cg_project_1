@@ -14,11 +14,11 @@ public:
     void set_y2( int _y2 ) { y2 = _y2; }
 
     mglLine( int, int, int, int );
-    void draw();
-    float distance_to( mglPoint );
-    void scale( float );
-    void rotate( float );
-    void move( int, int );
+    virtual void draw();
+    virtual float distance_to( mglPoint );
+    virtual void scale( float );
+    virtual void rotate( float );
+    virtual void move( int, int );
 private:
     int x1,y1,x2,y2;
 };
