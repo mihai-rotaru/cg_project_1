@@ -19,6 +19,13 @@ mglPrimitiveList letter_M,letter_R;
 int mouse_X, mouse_Y;
 char info[256];
 
+// modes:
+// 0 - move
+// 1 - scale
+// 2 - rotate
+int current_mode = 0;
+
+
 void display( void )
 {
     // clear all pixels
@@ -54,6 +61,30 @@ void init( void )
     letter_R.add_line( 350, 300, 350, 200 );
     letter_R.add_line( 350, 200, 250, 200 );
     letter_R.add_line( 250, 200, 350, 100 );
+}
+
+void myKeyboardFunc (unsigned char key, int x, int y)
+{
+	switch (key) {
+
+	case 'm':
+		current_mode = 0;
+		glutPostRedisplay();
+		break;
+	case 's':
+		current_mode = 1;
+		glutPostRedisplay();
+		break;
+	case 'r':
+		current_mode = 2;
+		glutPostRedisplay();
+		break;
+
+	case 27:			// Escape key
+		exit(0);
+		break;
+	}
+	sprintf( info, "Current mode: %d\n", current_mode );
 }
 
 static void Mouse(int button, int state, int _mouseX, int _mouseY)
@@ -95,14 +126,36 @@ GLvoid window_special_key(int key, int x, int y)
     switch (key) 
     {    
         case GLUT_KEY_RIGHT: 
-            letter_R.move( 10,0 );
+            if( current_mode == 0 ) letter_R.move( 10,0 );
+	    else if( current_mode == 1 ) letter_R.scale( 1.1,1.0 );
+	    else if( current_mode == 2 ) letter_R.rotate( 5,0,0 );
+	    else current_mode = 0;
             glutPostRedisplay();
             break;
 
 	case GLUT_KEY_LEFT: 
-	     letter_R.move( -10,0 );
+	     if( current_mode == 0 ) letter_R.move( -10,0 );
+	     else if( current_mode == 1 ) letter_R.scale( 0.9,1.0 );
+	     else if( current_mode == 2 ) letter_R.rotate( -5,0,0 );
+	     else current_mode = 0;
              glutPostRedisplay();
              break;
+	
+        case GLUT_KEY_UP:
+	     if( current_mode == 0 ) letter_R.move( 0, 10 );
+	     else if( current_mode == 1 ) letter_R.scale( 1.0, 1.1 );
+	     else if( current_mode == 2 ) letter_R.rotate( 5,0,0 );
+	     else current_mode = 0;
+	     glutPostRedisplay();
+	     break;
+	
+	case GLUT_KEY_DOWN:
+	     if( current_mode == 0 ) letter_R.move( 0, -10 );
+	     else if( current_mode == 1 ) letter_R.scale( 1.0 ,0.9 );
+	     else if( current_mode == 2 ) letter_R.rotate( -5,0,0 );
+	     else current_mode = 0;
+	     glutPostRedisplay();
+	     break;
     
   default:
     //printf ("Pressing %d doesn't do anything.\n", key);
@@ -129,6 +182,7 @@ int main( int argc, char** argv )
     // callbacks
     glutDisplayFunc( display );
     glutSpecialFunc( window_special_key );
+    glutKeyboardFunc( myKeyboardFunc );
     glutMouseFunc( Mouse );
 
     glutMainLoop();
