@@ -2,9 +2,12 @@
 
 mglPrimitiveList::mglPrimitiveList()
 {
+    // initialize visual properties
     color.Red = 0;
     color.Green = 0;
     color.Blue = 1;
+
+    line_width = 1;
 }
 
 void mglPrimitiveList::add_line( int x1, int y1, int x2, int y2 )
@@ -16,6 +19,8 @@ void mglPrimitiveList::add_line( int x1, int y1, int x2, int y2 )
 void mglPrimitiveList::draw()
 {
     glColor3f( color.Red, color.Green, color.Blue );
+    glLineWidth( line_width );
+
     list<mglPrimitive*>::iterator i;
 
     for( i=primitives.begin(); i != primitives.end(); ++i )

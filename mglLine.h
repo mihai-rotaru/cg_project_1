@@ -1,6 +1,7 @@
 #ifndef _MGL_LINE
 #define _MGL_LINE
 #include "mglPrimitive.h"
+#include "mgl_structs.h"
 
 class mglLine : virtual public mglPrimitive
 {

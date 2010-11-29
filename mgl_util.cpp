@@ -16,6 +16,6 @@ void PrintText( int nX, int nY, char* pszText )
             glRasterPos2i( nX, nY-(lines*18) );
         }
 
-        glutBitmapCharacter( GLUT_BITMAP_HELVETICA_18,  *p );
+        glutBitmapCharacter( GLUT_BITMAP_HELVETICA_10,  *p );
     }
 }

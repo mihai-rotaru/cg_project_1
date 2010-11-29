@@ -4,6 +4,8 @@
 //
 #include <GL/glut.h>
 #include <GL/glu.h>
+#include <string.h>
+#include <stdio.h>
 
 #include <iostream>
 #include <list>
@@ -14,16 +16,15 @@
 using namespace std;
 
 mglPrimitiveList letter_M,letter_R;
+int mouse_X, mouse_Y;
+char info[256];
 
 void display( void )
 {
     // clear all pixels
     glClear( GL_COLOR_BUFFER_BIT );
 
-    // set line colour red( r=1, g=0,b=0 ).
-    glColor3f( 1.0, 0.0, 0.0 );
-
-    PrintText( 20, 20, "Scale" );
+    PrintText( 20, 20, info );
 
     letter_M.draw();
     letter_R.draw();
@@ -53,6 +54,34 @@ void init( void )
     letter_R.add_line( 350, 300, 350, 200 );
     letter_R.add_line( 350, 200, 250, 200 );
     letter_R.add_line( 250, 200, 350, 100 );
+}
+
+static void Mouse(int button, int state, int _mouseX, int _mouseY)
+{
+    if (state == GLUT_DOWN)
+    {
+        if (button == GLUT_LEFT_BUTTON)
+        {
+            letter_R.line_width+=1;
+	}
+
+        else if (button == GLUT_RIGHT_BUTTON) 
+        {
+	    letter_R.line_width-=1;
+	}
+
+	char *x = new char[10];
+	char *y = new char[10];
+
+        sprintf( x, "Mouse X: %d\n", _mouseX ); 
+        sprintf( y, "Mouse Y: %d", _mouseY ); 
+
+	char *rstr = strcat( x, y );
+	strcpy( info, rstr );
+
+	PrintText( 40, 40, rstr );
+	glutPostRedisplay();
+  }
 }
 
 GLvoid window_special_key(int key, int x, int y) 
@@ -94,6 +123,7 @@ int main( int argc, char** argv )
     // callbacks
     glutDisplayFunc( display );
     glutSpecialFunc( window_special_key );
+    glutMouseFunc( Mouse );
 
     glutMainLoop();
     return 0;   // ANSI C requires main to return int.

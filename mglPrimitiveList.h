@@ -15,6 +15,7 @@ public:
 
     list<mglPrimitive*> primitives;
     mglColor3f color; 
+    float line_width;
 
     void add_line( int x1, int y1, int x2, int y2 );     
 
