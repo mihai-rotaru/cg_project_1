@@ -20,7 +20,7 @@ public:
 
     void draw();
     void scale( float, float );
-    void rotate( float );
+    void rotate( float, float, float );
     void move( int, int );
     int min_distance_to( mglPoint p );
     int max_distance_to( mglPoint p );

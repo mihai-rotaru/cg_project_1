@@ -20,7 +20,8 @@ void mglPrimitiveList::draw()
 
     for( i=primitives.begin(); i != primitives.end(); ++i )
         (*i)->draw();
-    //glFlush();
+
+    glutPostRedisplay();
 }
 
 void mglPrimitiveList::scale( float x_dir, float y_dir )
@@ -33,8 +34,15 @@ void mglPrimitiveList::scale( float x_dir, float y_dir )
     glutPostRedisplay();
 }
 
-void mglPrimitiveList::rotate( float f )
+void mglPrimitiveList::rotate( float theta, float x_rel, float y_rel )
 {
+    
+    list<mglPrimitive*>::iterator i;
+
+    for( i=primitives.begin(); i != primitives.end(); ++i )
+        (*i)->rotate( theta, x_rel, y_rel );
+    
+    glutPostRedisplay();
 }
 
 void mglPrimitiveList::move( int x_dist, int y_dist )
@@ -43,4 +51,6 @@ void mglPrimitiveList::move( int x_dist, int y_dist )
 
     for( i=primitives.begin(); i != primitives.end(); ++i )
         (*i)->move( x_dist, y_dist );
+    
+    glutPostRedisplay();
 }

@@ -35,6 +35,8 @@ void display( void )
     letter_R.add_line( 350, 300, 350, 200 );
     letter_R.add_line( 350, 200, 250, 200 );
     letter_R.add_line( 250, 200, 350, 100 );
+    //letter_R.rotate( 3.0, 0.0, 0.0 );
+//    letter_R.move( 100,100 );
     letter_R.draw();
 
     PrintText( 20, 20, "Scale" );

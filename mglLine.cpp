@@ -2,6 +2,8 @@
 #include "mglLine.h"
 #include <stdlib.h>
 #include "mgl_util.h"
+#include <math.h>
+#include <stdio.h>
 //#include "mgl_structs.h"
 
 mglLine::mglLine( int _x1, int _y1, int _x2, int _y2 )
@@ -41,8 +43,20 @@ void mglLine::scale( float x_dir, float y_dir )
     PrintText( 50,50, mstr );
 }
 
-void mglLine::rotate( float angle )
+void mglLine::rotate( float theta, float x_rel, float y_rel )
 {
+//    glPushMatrix();
+//       glRotatef( theta, x_rel, y_rel, 1 );
+//       draw();
+//    glPopMatrix();
+//    glutPostRedisplay();
+    x1 = ( x1 * cos( theta )) - ( y1 * sin( theta ));
+    y1 = ( x1 * sin( theta )) + ( y1 * cos( theta ));
+    x2 = ( x2 * cos( theta )) - ( y2 * sin( theta ));
+    y2 = ( x2 * sin( theta )) + ( y2 * cos( theta ));
+    printf("cos( %d ) = %d sin( %d ) = %d\n", theta, cos( theta ), theta, sin( theta ));
+    printf("x1 = %d y1 = %d x2 = %d y2 = %d\r\n", x1, y1, x2, y2 );
+
 }
 
 void mglLine::move( int x_distance, int y_distance )

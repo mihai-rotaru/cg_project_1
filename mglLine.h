@@ -19,7 +19,7 @@ public:
     virtual void draw();
     virtual float distance_to( mglPoint );
     virtual void scale( float, float );
-    virtual void rotate( float );
+    virtual void rotate( float, float, float );
     virtual void move( int, int );
 private:
     int x1,y1,x2,y2;
