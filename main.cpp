@@ -72,14 +72,18 @@ static void Mouse(int button, int state, int _mouseX, int _mouseY)
 
 	char *x = new char[10];
 	char *y = new char[10];
+	char *dm = new char[10];
+	char *dr = new char[10];
 
         sprintf( x, "Mouse X: %d\n", _mouseX ); 
         sprintf( y, "Mouse Y: %d", _mouseY ); 
+        //sprintf( dm, "Distance to M: %d",  ); 
 
+        
 	char *rstr = strcat( x, y );
 	strcpy( info, rstr );
 
-	PrintText( 40, 40, rstr );
+	PrintText( 40, 80, rstr );
 	glutPostRedisplay();
   }
 }
