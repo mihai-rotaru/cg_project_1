@@ -10,27 +10,8 @@
 
 #include "mglLine.h"
 #include "mglPrimitiveList.h"
+#include "mgl_util.h"
 using namespace std;
-
-void PrintText( int nX, int nY, char* pszText )
-{
-    int lines;
-    char *p;
-
-    glColor3ub( 150, 150, 150 );
-    glRasterPos2i( nX, nY );
-
-    for( p=pszText, lines=0; *p; p++ )
-    {
-        if( *p == '\n' )
-        {
-            lines++;
-            glRasterPos2i( nX, nY-(lines*18) );
-        }
-
-        glutBitmapCharacter( GLUT_BITMAP_HELVETICA_18,  *p );
-    }
-}
 
 void display( void )
 {
@@ -48,9 +29,16 @@ void display( void )
     letter_M.add_line( 200, 300, 200, 100 );
     letter_M.draw();
 
-    PrintText( 20, 20, "TEST" );
-    
+    mglPrimitiveList letter_R;
+    letter_R.add_line( 250, 100, 250, 300 );
+    letter_R.add_line( 250, 300, 350, 300 );
+    letter_R.add_line( 350, 300, 350, 200 );
+    letter_R.add_line( 350, 200, 250, 200 );
+    letter_R.add_line( 250, 200, 350, 100 );
+    letter_R.draw();
 
+    PrintText( 20, 20, "Scale" );
+    
     glFlush();
     glutPostRedisplay();
 }

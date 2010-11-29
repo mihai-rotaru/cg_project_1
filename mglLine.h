@@ -18,7 +18,7 @@ public:
     mglLine( int, int, int, int );
     virtual void draw();
     virtual float distance_to( mglPoint );
-    virtual void scale( float );
+    virtual void scale( float, float );
     virtual void rotate( float );
     virtual void move( int, int );
 private:

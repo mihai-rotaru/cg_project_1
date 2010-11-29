@@ -1,13 +1,10 @@
 #include "mglPrimitiveList.h"
 
-void mglPrimitiveList::add_front( mglPrimitive* p_prim )
+mglPrimitiveList::mglPrimitiveList()
 {
-    primitives.push_front( p_prim );
-}
-
-void mglPrimitiveList::add_back( mglPrimitive* p_prim )
-{
-    primitives.push_back( p_prim );
+    color.Red = 0;
+    color.Green = 0;
+    color.Blue = 1;
 }
 
 void mglPrimitiveList::add_line( int x1, int y1, int x2, int y2 )
@@ -18,14 +15,22 @@ void mglPrimitiveList::add_line( int x1, int y1, int x2, int y2 )
 
 void mglPrimitiveList::draw()
 {
+    glColor3f( color.Red, color.Green, color.Blue );
     list<mglPrimitive*>::iterator i;
 
     for( i=primitives.begin(); i != primitives.end(); ++i )
         (*i)->draw();
+    glFlush();
 }
 
-void mglPrimitiveList::scale( float f )
+void mglPrimitiveList::scale( float x_dir, float y_dir )
 {
+    list<mglPrimitive*>::iterator i;
+
+    for( i=primitives.begin(); i != primitives.end(); ++i )
+        (*i)->scale( x_dir, y_dir );
+
+    glutPostRedisplay();
 }
 
 void mglPrimitiveList::rotate( float f )

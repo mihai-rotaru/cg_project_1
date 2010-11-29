@@ -1,5 +1,7 @@
 #include <GL/glu.h>
 #include "mglLine.h"
+#include <stdlib.h>
+#include "mgl_util.h"
 //#include "mgl_structs.h"
 
 mglLine::mglLine( int _x1, int _y1, int _x2, int _y2 )
@@ -23,8 +25,20 @@ float mglLine::distance_to( mglPoint p )
     return 0;
 }
 
-void mglLine::scale( float factor )
+void mglLine::scale( float x_dir, float y_dir )
 {
+//    glPushMatrix();
+//        glScalef( x_dir, y_dir, 1.0 );
+//        draw();
+//    glPopMatrix();	
+    x1 = (int)(x1 * x_dir);
+    y1 = (int)(y1 * y_dir);
+    x2 = (int)(x2 * x_dir);
+    y2 = (int)(y2 * y_dir);
+    
+    char mstr[20];
+    itoa( x1, mstr, 10 );
+    PrintText( 50,50, mstr );
 }
 
 void mglLine::rotate( float angle )

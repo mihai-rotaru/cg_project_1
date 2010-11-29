@@ -2,6 +2,8 @@
 #define _MGL_PRIMITIVE_LIST
 #include "mglPrimitive.h"
 #include "mglLine.h"
+#include "mgl_structs.h"
+#include <GL/glut.h>
 #include <list>
 using namespace std;
 
@@ -9,15 +11,15 @@ using namespace std;
 class mglPrimitiveList
 {
 public:
-    list<mglPrimitive*> primitives;
+    mglPrimitiveList();
 
-    void add_front( mglPrimitive* p );
-    void add_back(  mglPrimitive* p );
+    list<mglPrimitive*> primitives;
+    mglColor3f color; 
 
     void add_line( int x1, int y1, int x2, int y2 );     
 
     void draw();
-    void scale( float );
+    void scale( float, float );
     void rotate( float );
     void move( int, int );
     int min_distance_to( mglPoint p );
