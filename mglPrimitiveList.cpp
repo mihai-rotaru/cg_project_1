@@ -20,7 +20,7 @@ void mglPrimitiveList::draw()
 
     for( i=primitives.begin(); i != primitives.end(); ++i )
         (*i)->draw();
-    glFlush();
+    //glFlush();
 }
 
 void mglPrimitiveList::scale( float x_dir, float y_dir )
