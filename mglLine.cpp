@@ -33,4 +33,8 @@ void mglLine::rotate( float angle )
 
 void mglLine::move( int x_distance, int y_distance )
 {
+    x1 += x_distance;
+    x2 += x_distance;
+    y1 += y_distance;
+    y2 += y_distance;    
 }

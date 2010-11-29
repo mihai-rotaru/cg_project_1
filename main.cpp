@@ -40,25 +40,10 @@ void display( void )
     // set line colour red( r=1, g=0,b=0 ).
     glColor3f( 1.0, 0.0, 0.0 );
 
-    // draw a line from point( 100,150 ) to point( 200, 300 )
-//    glBegin( GL_LINE_STRIP );
-//	    glVertex2i( 100,100 );
-//	    glVertex2i( 100,300 );
-//	    glVertex2i( 150,200 );
-//	    glVertex2i( 200,300 );
-//	    glVertex2i( 200,100 );
-//    glEnd();
-
-    // keep showing( flushing ) line on the screen instead of showing just once.
-    mglLine line1( 100,100,100,300 );
-    mglLine line2( 100,300,150,200 );
-    //line1.draw();
-    //line2.draw();
-
     // using the new classes
     mglPrimitiveList letter_M;
-    letter_M.add_front( &line1 );
-    letter_M.add_front( &line2 );
+    letter_M.add_line( 100, 100, 100, 300 );
+    letter_M.add_line( 100, 300, 150, 200 );
     letter_M.add_line( 150, 200, 200, 300 );
     letter_M.add_line( 200, 300, 200, 100 );
     letter_M.draw();

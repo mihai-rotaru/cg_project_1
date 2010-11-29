@@ -1,3 +1,5 @@
+#ifndef _MGL_PRIMITIVE_LIST
+#define _MGL_PRIMITIVE_LIST
 #include "mglPrimitive.h"
 #include "mglLine.h"
 #include <list>
@@ -21,3 +23,4 @@ public:
     int min_distance_to( mglPoint p );
     int max_distance_to( mglPoint p );
 }; 
+#endif
