@@ -24,7 +24,7 @@ void display( void )
     // clear all pixels
     glClear( GL_COLOR_BUFFER_BIT );
 
-    PrintText( 20, 20, info );
+    PrintText( 20, 50, info );
 
     letter_M.draw();
     letter_R.draw();
@@ -58,6 +58,8 @@ void init( void )
 
 static void Mouse(int button, int state, int _mouseX, int _mouseY)
 {
+    _mouseY = glutGet( GLUT_WINDOW_HEIGHT ) - _mouseY;
+    
     if (state == GLUT_DOWN)
     {
         if (button == GLUT_LEFT_BUTTON)
@@ -75,15 +77,15 @@ static void Mouse(int button, int state, int _mouseX, int _mouseY)
 	char *dm = new char[10];
 	char *dr = new char[10];
 
-        sprintf( x, "Mouse X: %d\n", _mouseX ); 
-        sprintf( y, "Mouse Y: %d", _mouseY ); 
-        //sprintf( dm, "Distance to M: %d",  ); 
+        sprintf( x, " Mouse X: %d\n", _mouseX ); 
+        sprintf( y, "Mouse Y: %d\n", _mouseY ); 
+        sprintf( dm, "Distance to M: %.2f\n",letter_M.min_distance_to( _mouseX, _mouseY )); 
 
         
 	char *rstr = strcat( x, y );
 	strcpy( info, rstr );
+	strcat( info, dm );
 
-	PrintText( 40, 80, rstr );
 	glutPostRedisplay();
   }
 }

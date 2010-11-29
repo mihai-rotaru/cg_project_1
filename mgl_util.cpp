@@ -33,8 +33,8 @@ float shortest_distance(float x, float y, float x1, float y1, float x2, float y2
 	float C = x2 - x1;
 	float D = y2 - y1;
 	 
-	float dot = A * C + B * D;
-	float len_sq = C * C + D * D;
+	float dot = (A * C) + (B * D);
+	float len_sq = (C * C) + (D * D);
 	float param = dot / len_sq;
 	 
 	float xx,yy;
@@ -51,8 +51,8 @@ float shortest_distance(float x, float y, float x1, float y1, float x2, float y2
 	}
 	else
 	{
-	    xx = x1 + param * C;
-	    yy = y1 + param * D;
+	    xx = x1 + ( param * C );
+	    yy = y1 + ( param * D );
 	}
 	 
 	return distance( x, y, xx, yy );//your distance function

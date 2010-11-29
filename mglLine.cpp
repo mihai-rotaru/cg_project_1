@@ -22,11 +22,6 @@ void mglLine::draw()
     glEnd();
 }
 
-float mglLine::distance_to( mglPoint p )
-{
-    return 0;
-}
-
 void mglLine::scale( float x_dir, float y_dir )
 {
 //    glPushMatrix();
@@ -66,4 +61,9 @@ void mglLine::move( int x_distance, int y_distance )
     x2 += x_distance;
     y1 += y_distance;
     y2 += y_distance;    
+}
+
+float mglLine::distance_to( int x, int y )
+{
+    return shortest_distance( (float)x, (float)y, (float)x1, (float)y1, (float)x2, (float)y2 );
 }

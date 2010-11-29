@@ -23,7 +23,7 @@ public:
     void scale( float, float );
     void rotate( float, float, float );
     void move( int, int );
-    int min_distance_to( mglPoint p );
-    int max_distance_to( mglPoint p );
+    float min_distance_to( int, int );
+    float max_distance_to( int, int );
 }; 
 #endif

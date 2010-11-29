@@ -59,3 +59,35 @@ void mglPrimitiveList::move( int x_dist, int y_dist )
     
     glutPostRedisplay();
 }
+
+float mglPrimitiveList::min_distance_to( int x, int y )
+{
+    float min_distance = 999999;
+
+    list<mglPrimitive*>::iterator i;
+
+    for( i=primitives.begin(); i != primitives.end(); ++i )
+    {
+        float this_prim_dist = (*i)->distance_to( x, y );
+	if( this_prim_dist < min_distance ) min_distance = this_prim_dist;
+    }
+
+    return min_distance;
+}
+
+float mglPrimitiveList::max_distance_to( int x, int y )
+{
+    float max_distance = 0;
+    
+    list<mglPrimitive*>::iterator i;
+
+    for( i=primitives.begin(); i != primitives.end(); ++i )
+    {
+        float this_prim_dist = (*i)->distance_to( x, y );
+	if( this_prim_dist > max_distance ) max_distance = this_prim_dist;
+    }
+
+    return max_distance;
+}
+
+
