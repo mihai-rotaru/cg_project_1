@@ -90,4 +90,10 @@ float mglPrimitiveList::max_distance_to( int x, int y )
     return max_distance;
 }
 
+mglPrimitiveList::~mglPrimitiveList()
+{
+    list<mglPrimitive*>::iterator i;
 
+    for( i=primitives.begin(); i != primitives.end(); ++i )
+	    delete (*i);
+}

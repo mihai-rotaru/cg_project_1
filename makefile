@@ -15,3 +15,4 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@ $(INCLUDES)
 clean:
 	rm -f *.o *~
+	rm main.exe
