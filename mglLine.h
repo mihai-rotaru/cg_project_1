@@ -23,5 +23,6 @@ public:
     virtual void rotate( float, float, float );
     virtual void move( int, int );
     int x1,y1,x2,y2;
+    GLuint m_line;
 };
 #endif

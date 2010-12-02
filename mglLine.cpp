@@ -8,10 +8,16 @@
 
 mglLine::mglLine( int _x1, int _y1, int _x2, int _y2 )
 {
-    x1 = _x1;
-    x2 = _x2;
-    y1 = _y1;
-    y2 = _y2;
+//    x1 = _x1;
+//    x2 = _x2;
+//    y1 = _y1;
+//    y2 = _y2;
+    mline = glGenList( 1 );
+    printf( "mline: %d", mline );
+    glNewList( mline, GL_COMPILE );
+    glVertex2i( x1, y1 );
+    glVertex2i( x2, y2 );
+    glEndList();    
 }
 
 void mglLine::draw()
@@ -40,7 +46,7 @@ void mglLine::scale( float x_dir, float y_dir )
 
 void mglLine::rotate( float theta, float x_rel, float y_rel )
 {
-	printf("theta: %d, x_rel: %d, y_rel: %d", theta, x_rel, y_rel );
+    printf("theta: %.2f, x_rel: %.2f, y_rel: %.2f\n", theta, x_rel, y_rel );
     glPushMatrix();
        glRotatef( theta, x_rel, y_rel, 1 );
        draw();
@@ -57,10 +63,15 @@ void mglLine::rotate( float theta, float x_rel, float y_rel )
 
 void mglLine::move( int x_distance, int y_distance )
 {
-    x1 += x_distance;
-    x2 += x_distance;
-    y1 += y_distance;
-    y2 += y_distance;    
+//    x1 += x_distance;
+//    x2 += x_distance;
+//    y1 += y_distance;
+//    y2 += y_distance;    
+    glPushMatrix();
+        glTranslatef( (float)x_distance, (float)y_distance, 0 );
+	draw();
+    glPopMatrix();
+    glutPostRedisplay();
 }
 
 float mglLine::distance_to( int x, int y )
