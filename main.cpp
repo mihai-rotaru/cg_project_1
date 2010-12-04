@@ -29,6 +29,7 @@ int current_mode = 0;
 void display( void )
 {
     // clear all pixels
+    glRenderMode( GL_RENDER );
     glClear( GL_COLOR_BUFFER_BIT );
 
     PrintText( 20, 50, info );

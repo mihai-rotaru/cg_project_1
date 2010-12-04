@@ -1,5 +1,6 @@
 #ifndef _MGL_LINE
 #define _MGL_LINE
+#include <GL/glu.h>
 #include "mglPrimitive.h"
 #include "mgl_structs.h"
 
