@@ -23,6 +23,10 @@ public:
     virtual void scale( float, float );
     virtual void rotate( float, float, float );
     virtual void move( int, int );
+    virtual int getMaxX();
+    virtual int getMinX();
+    virtual int getMaxY();
+    virtual int getMinY();
     int x1,y1,x2,y2;
     GLuint m_line;
 };

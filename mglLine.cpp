@@ -93,3 +93,23 @@ float mglLine::distance_to( int x, int y )
 {
     return shortest_distance( (float)x, (float)y, (float)x1, (float)y1, (float)x2, (float)y2 );
 }
+
+int mglLine::getMaxX()
+{
+    return ( x1 > x2 ? x1 : x2 );
+}
+
+int mglLine::getMinX()
+{
+    return ( x1 < x2 ? x1 : x2 );
+}
+
+int mglLine::getMaxY()
+{
+    return ( y1 > y2 ? y1 : y2 );
+}
+
+int mglLine::getMinY()
+{
+    return ( y1 < y2 ? y1 : y2 );
+}

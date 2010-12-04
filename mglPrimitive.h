@@ -11,5 +11,9 @@ public:
     virtual void scale( float, float )=0;
     virtual void rotate( float,float,float )=0;
     virtual void move( int x_dist, int y_dist )=0;
+    virtual int getMaxX( )=0;
+    virtual int getMinX( )=0;
+    virtual int getMaxY( )=0;
+    virtual int getMinY( )=0;
 };
 #endif

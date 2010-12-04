@@ -64,6 +64,17 @@ void init( void )
     letter_R.add_line( 250, 200, 350, 100 );
 }
 
+void myReshape( int nWidht, int nHeight )
+{
+    glViewport( 0, 0, (GLsizei)nWidht, (GLsizei)nHeight );
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
+    gluOrtho2D( 0, nWidht, 0, nHeight);
+    glutPostRedisplay();
+}
+
+
+
 void myKeyboardFunc (unsigned char key, int x, int y)
 {
 	switch (key) {
@@ -185,6 +196,7 @@ int main( int argc, char** argv )
     glutSpecialFunc( window_special_key );
     glutKeyboardFunc( myKeyboardFunc );
     glutMouseFunc( Mouse );
+    glutReshapeFunc( myReshape );
 
     glutMainLoop();
     return 0;   // ANSI C requires main to return int.
