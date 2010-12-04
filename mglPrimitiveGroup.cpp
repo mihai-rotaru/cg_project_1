@@ -1,6 +1,6 @@
-#include "mglPrimitiveList.h"
+#include "mglPrimitiveGroup.h"
 
-mglPrimitiveList::mglPrimitiveList()
+mglPrimitiveGroup::mglPrimitiveGroup()
 {
     // initialize visual properties
     color.Red = 0;
@@ -10,13 +10,13 @@ mglPrimitiveList::mglPrimitiveList()
     line_width = 1;
 }
 
-void mglPrimitiveList::add_line( int x1, int y1, int x2, int y2 )
+void mglPrimitiveGroup::add_line( int x1, int y1, int x2, int y2 )
 {
     mglLine* line = new mglLine( x1, y1, x2, y2 );
     primitives.push_front( line );
 }
 
-void mglPrimitiveList::draw()
+void mglPrimitiveGroup::draw()
 {
     glColor3f( color.Red, color.Green, color.Blue );
     glLineWidth( line_width );
@@ -29,7 +29,7 @@ void mglPrimitiveList::draw()
     glutPostRedisplay();
 }
 
-void mglPrimitiveList::scale( float x_dir, float y_dir )
+void mglPrimitiveGroup::scale( float x_dir, float y_dir )
 {
     list<mglPrimitive*>::iterator i;
 
@@ -39,7 +39,7 @@ void mglPrimitiveList::scale( float x_dir, float y_dir )
     glutPostRedisplay();
 }
 
-void mglPrimitiveList::rotate( float theta, float x_rel, float y_rel )
+void mglPrimitiveGroup::rotate( float theta, float x_rel, float y_rel )
 {
     
     list<mglPrimitive*>::iterator i;
@@ -50,7 +50,7 @@ void mglPrimitiveList::rotate( float theta, float x_rel, float y_rel )
     glutPostRedisplay();
 }
 
-void mglPrimitiveList::move( int x_dist, int y_dist )
+void mglPrimitiveGroup::move( int x_dist, int y_dist )
 {
     list<mglPrimitive*>::iterator i;
 
@@ -60,7 +60,7 @@ void mglPrimitiveList::move( int x_dist, int y_dist )
     glutPostRedisplay();
 }
 
-float mglPrimitiveList::min_distance_to( int x, int y )
+float mglPrimitiveGroup::min_distance_to( int x, int y )
 {
     float min_distance = 999999;
 
@@ -75,7 +75,7 @@ float mglPrimitiveList::min_distance_to( int x, int y )
     return min_distance;
 }
 
-float mglPrimitiveList::max_distance_to( int x, int y )
+float mglPrimitiveGroup::max_distance_to( int x, int y )
 {
     float max_distance = 0;
     
@@ -90,7 +90,7 @@ float mglPrimitiveList::max_distance_to( int x, int y )
     return max_distance;
 }
 
-mglPrimitiveList::~mglPrimitiveList()
+mglPrimitiveGroup::~mglPrimitiveGroup()
 {
     list<mglPrimitive*>::iterator i;
 

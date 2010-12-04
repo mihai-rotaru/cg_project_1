@@ -11,11 +11,11 @@
 #include <list>
 
 #include "mglLine.h"
-#include "mglPrimitiveList.h"
+#include "mglPrimitiveGroup.h"
 #include "mgl_util.h"
 using namespace std;
 
-mglPrimitiveList letter_M,letter_R;
+mglPrimitiveGroup letter_M,letter_R;
 int mouse_X, mouse_Y;
 char info[256];
 

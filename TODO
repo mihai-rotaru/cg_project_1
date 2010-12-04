@@ -1,11 +1,14 @@
 Milestones
 ==========
-initial build: 0.1
-render two characters: 0.2
-translation: 0.3
-rotation: 0.4
-scaling: 0.5
-changing colors: 0.6
+X render two characters
+X translation
+X rotation
+X scaling
+  changing colors
+  anti-aliasing
+  double-buffering
+  mouse selection
+  tab selection
 
 After all this basic functionality is implemented, try using waf as
 a build system. ( note: needs python )

@@ -8,10 +8,10 @@
 using namespace std;
 
 
-class mglPrimitiveList
+class mglPrimitiveGroup
 {
 public:
-    mglPrimitiveList();
+    mglPrimitiveGroup();
 
     list<mglPrimitive*> primitives;
     mglColor3f color; 
@@ -26,6 +26,6 @@ public:
     float min_distance_to( int, int );
     float max_distance_to( int, int );
 
-    ~mglPrimitiveList();
+    ~mglPrimitiveGroup();
 }; 
 #endif

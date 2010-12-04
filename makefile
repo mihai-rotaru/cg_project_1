@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=-c
 INCLUDES=-I"C:\MinGW\freeglut\include"
 LDFLAGS=-L"C:\MinGW\freeglut\lib"
-SOURCES=main.cpp mglLine.cpp mglPrimitiveList.cpp mgl_util.cpp
+SOURCES=main.cpp mglLine.cpp mglPrimitiveGroup.cpp mgl_util.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=main.exe
 
