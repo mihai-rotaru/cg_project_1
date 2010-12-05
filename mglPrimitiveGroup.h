@@ -12,6 +12,11 @@ class mglPrimitiveGroup
 {
 public:
     mglPrimitiveGroup();
+    mglPrimitiveGroup( char* name );
+    ~mglPrimitiveGroup();
+    
+    bool is_selected;
+    char name[30];
 
     list<mglPrimitive*> primitives;
     mglColor3f color; 
@@ -26,6 +31,6 @@ public:
     float min_distance_to( int, int );
     float max_distance_to( int, int );
 
-    ~mglPrimitiveGroup();
+    void print();
 }; 
 #endif

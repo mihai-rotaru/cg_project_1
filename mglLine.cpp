@@ -4,7 +4,19 @@
 #include "mgl_util.h"
 #include <math.h>
 #include <stdio.h>
+#include <string.h>
 //#include "mgl_structs.h"
+
+mglLine::mglLine( char* _name, int _x1, int _y1, int _x2, int _y2 )
+{
+    x1 = _x1;
+    x2 = _x2;
+    y1 = _y1;
+    y2 = _y2;
+    strcpy( name, _name );
+    if( DEBUG ) 
+        printf("ctor mglLine: adr: %x, name = %s\n", this, name );
+}
 
 mglLine::mglLine( int _x1, int _y1, int _x2, int _y2 )
 {
@@ -12,6 +24,15 @@ mglLine::mglLine( int _x1, int _y1, int _x2, int _y2 )
     x2 = _x2;
     y1 = _y1;
     y2 = _y2;
+    strcpy( name, "unnamed Line" );
+    if( DEBUG ) 
+        printf("ctor mglLine: adr: %x, name = %s\n", this, name );
+}
+
+mglLine::~mglLine()
+{
+    if( DEBUG ) 
+        printf("dtor mglLine: adr: %x, name = %s\n", this, name );
 }
 
 void mglLine::draw()
@@ -22,12 +43,14 @@ void mglLine::draw()
     glEnd();
 }
 
+void mglLine::print()
+{
+    printf("   mglLine; name = %s, adr = %x ", name, this );
+    printf(" x1 = %3d, y1 = %3d, x2 = %3d, y2 = %3d\n", x1, y1, x2, y2 );
+}
+
 void mglLine::scale( float x_dir, float y_dir )
 {
-//    glPushMatrix();
-//        glScalef( x_dir, y_dir, 1.0 );
-//        draw();
-//    glPopMatrix();	
     GLfloat* buff = new GLfloat[5];
     glFeedbackBuffer( 5, GL_2D, buff );
     
@@ -51,7 +74,7 @@ void mglLine::scale( float x_dir, float y_dir )
 
 void mglLine::rotate( float theta, float x_rel, float y_rel )
 {
-    printf("theta: %.2f, x_rel: %.2f, y_rel: %.2f\n", theta, x_rel, y_rel );
+    dprintf("theta: %.2f, x_rel: %.2f, y_rel: %.2f\n", theta, x_rel, y_rel );
 
     GLfloat* buff = new GLfloat[5];
     glFeedbackBuffer( 5, GL_2D, buff );

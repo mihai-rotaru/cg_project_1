@@ -1,8 +1,8 @@
 CC=g++
-CFLAGS=-c
+CFLAGS=-c -g
 INCLUDES=-I"C:\MinGW\freeglut\include"
 LDFLAGS=-L"C:\MinGW\freeglut\lib"
-SOURCES=main.cpp mglLine.cpp mglPrimitiveGroup.cpp mgl_util.cpp
+SOURCES=main.cpp mglLine.cpp mglPrimitiveGroup.cpp mgl_util.cpp mglGroupManager.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=main.exe
 

@@ -1,13 +1,51 @@
 #include "mglPrimitiveGroup.h"
+#include <stdio.h>
+#include <string.h>
+
 
 mglPrimitiveGroup::mglPrimitiveGroup()
 {
+    strcpy( name, "unnamed PrimitiveGroup" );
+
+    dprintf("ctor mglPrimitiveGroup: adr: %x, name = %s\n", this, name );
     // initialize visual properties
     color.Red = 0;
     color.Green = 0;
     color.Blue = 1;
 
     line_width = 1;
+    is_selected = false;
+}
+
+mglPrimitiveGroup::mglPrimitiveGroup( char* _name )
+{
+    strcpy( name, _name );
+    if( DEBUG ) printf("ctor mglPrimitiveGroup: adr: %x, name = %s\n", this, name );
+
+    color.Red = 0;
+    color.Green = 0;
+    color.Blue = 1;
+
+    line_width = 1;
+    is_selected = false;
+}
+
+mglPrimitiveGroup::~mglPrimitiveGroup()
+{
+    if( DEBUG ) printf("dtor mglPrimitiveGroup: adr: %x, name = %s\n", this, name );
+    list<mglPrimitive*>::iterator i;
+
+    for( i=primitives.begin(); i != primitives.end(); ++i )
+	    delete (*i);
+}
+
+void mglPrimitiveGroup::print()
+{
+    printf("mglPrimitiveGroup; adr: %x, name = %s, items: %d\n",
+            this, name, primitives.size());
+    for( list<mglPrimitive*>::iterator it = primitives.begin(); it != primitives.end(); ++it )
+        (*it)->print();
+        
 }
 
 void mglPrimitiveGroup::add_line( int x1, int y1, int x2, int y2 )
@@ -18,7 +56,10 @@ void mglPrimitiveGroup::add_line( int x1, int y1, int x2, int y2 )
 
 void mglPrimitiveGroup::draw()
 {
-    glColor3f( color.Red, color.Green, color.Blue );
+    is_selected ?
+        glColor3f( selected_colour.Red, selected_colour.Green, selected_colour.Blue ):
+        glColor3f( default_colour.Red, default_colour.Green, default_colour.Blue );
+    
     glLineWidth( line_width );
 
     list<mglPrimitive*>::iterator i;
@@ -90,10 +131,3 @@ float mglPrimitiveGroup::max_distance_to( int x, int y )
     return max_distance;
 }
 
-mglPrimitiveGroup::~mglPrimitiveGroup()
-{
-    list<mglPrimitive*>::iterator i;
-
-    for( i=primitives.begin(); i != primitives.end(); ++i )
-	    delete (*i);
-}

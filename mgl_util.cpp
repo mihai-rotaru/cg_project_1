@@ -58,3 +58,20 @@ float shortest_distance(float x, float y, float x1, float y1, float x2, float y2
 	return distance( x, y, xx, yy );//your distance function
 
 }
+
+int dprintf( char const * __restrict fmt, ... )
+{
+    if( DEBUG )
+    {
+        int ret;
+        va_list ap;
+
+        va_start( ap, fmt );
+        ret = vfprintf( stdout, fmt, ap );
+        va_end( ap );
+        
+        return ret;
+    }
+    return -1;
+}
+

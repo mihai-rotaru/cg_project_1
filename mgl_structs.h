@@ -12,4 +12,9 @@ struct mglColor3f
     float Green;
     float Blue;
 };
+
+// the following 2 lines work only with C++0x
+const struct mglColor3f default_colour { 0, 0, 1 };
+const struct mglColor3f selected_colour { 0, 1, 0};
+
 #endif
