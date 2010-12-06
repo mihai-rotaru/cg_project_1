@@ -5,7 +5,7 @@ X translation
 X rotation
 X scaling
   changing colors
-  selection ( using slicing - make visible )
+X selection ( using slicing - make visible )
   shapes get truncated
   scaling - rel. to lower-left corner of prim.
   rotating - rel. to center of prim.
@@ -16,9 +16,11 @@ X scaling
   anti-aliasing
   double-buffering
   mouse selection
-  tab selection
+X tab selection
   actions ( undo ) 
   mouse over - highlight hovered objects
 
 After all this basic functionality is implemented, try using waf as
 a build system. ( note: needs python )
+
+isolate current issue: rotation / clipping

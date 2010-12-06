@@ -30,6 +30,10 @@ public:
     void move( int, int );
     float min_distance_to( int, int );
     float max_distance_to( int, int );
+    int getMaxX();
+    int getMaxY();
+    int getMinX();
+    int getMinY();
 
     void print();
 }; 

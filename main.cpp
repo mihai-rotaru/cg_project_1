@@ -49,7 +49,7 @@ void select( mglPrimitiveGroup* prims )
             if( (*it) != prims )
             {
                 //(*it)->is_selected = false;
-                dprintf("splicing selected to visible %s\n", (*it)->name);
+                dprintf("splicing from selected to visible %s\n", (*it)->name);
                 visibleGroups.groups.splice( visibleGroups.groups.begin(), selectedGroups.groups, it );  
                 (*it)->is_selected = false;
                 visibleGroups.print();
@@ -76,9 +76,9 @@ void select( mglPrimitiveGroup* prims )
         printf(" ERROR: cannot find %s in visibleGroups\n", prims->name );
     else // iprim is an iterator pointing to prims in visibleGroups
     {
-        dprintf("splicing visible to selected: %s\n", (*iprim)->name);
-        (*iprim)->is_selected = true;
+        dprintf("splicing from visible to selected: %s\n", (*iprim)->name);
         selectedGroups.groups.splice( selectedGroups.groups.begin(),visibleGroups.groups, iprim );  
+        (*iprim)->is_selected = true;
     }
 
     dprintf("--> after selection\n");
@@ -93,6 +93,29 @@ void add_to_selection( mglPrimitiveGroup* prims )
     printf("unselect:  selectedGroups size: %d\n", selectedGroups.groups.size());
 }
 
+void de_select_all()
+{
+    if( selectedGroups.groups.empty())
+    {
+        dprintf("cannot deselect - no selection\n");
+        return;
+    }
+    
+    list<mglPrimitiveGroup*>::iterator it = selectedGroups.groups.begin();
+    if( selectedGroups.groups.size() == 1 )
+    {
+        (*it)->is_selected = false;
+    }
+    else
+        do
+        {
+           (*it)->is_selected = false;
+           ++it;
+        } 
+        while( it != selectedGroups.groups.end());
+    visibleGroups.groups.splice( visibleGroups.groups.begin(), selectedGroups.groups );
+}
+
 void display( void )
 {
     // clear all pixels
@@ -100,14 +123,11 @@ void display( void )
     glClear( GL_COLOR_BUFFER_BIT );
 
     PrintText( 20, 50, info );
-    //printf("DISPLAY: visibleGroups size: %d\n", visibleGroups.groups.size());
-    //printf("DISPLAY: selectedGroups size: %d\n", selectedGroups.groups.size());
-
 
     visibleGroups.draw();
     selectedGroups.draw();
     
-    glFlush();
+    glutSwapBuffers();
     glutPostRedisplay();
 }
 
@@ -119,7 +139,13 @@ void init( void )
     // initialize viewing values
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
-    gluOrtho2D( 0,500,0,500 );
+    gluOrtho2D( -500,500,-500,500 );
+
+    glEnable( GLUT_MULTISAMPLE );
+    glEnable(GL_LINE_SMOOTH);
+    int buf=-100;
+    glGetIntegerv(GLUT_WINDOW_NUM_SAMPLES, &buf);
+    printf("number of samples is %d\n", buf);
     
     // using the new classes
     letter_M.add_line( 100, 100, 100, 300 );
@@ -136,7 +162,7 @@ void init( void )
     visibleGroups.add_front( &letter_M );
     visibleGroups.add_front( &letter_R );
 
-    select( &letter_R );
+    select( &letter_M );
     tab_next = visibleGroups.groups.begin();
 }
 
@@ -152,7 +178,6 @@ void myReshape( int nWidht, int nHeight )
 void myKeyboardFunc (unsigned char key, int x, int y)
 {
 	switch (key) {
-
 	case 'm':
 		current_mode = 0;
 		glutPostRedisplay();
@@ -194,7 +219,54 @@ void Mouse(int button, int state, int _mouseX, int _mouseY)
     {
         if (button == GLUT_LEFT_BUTTON)
         {
-            letter_R.line_width+=1;
+            dprintf("ON CLICK:\n");
+            visibleGroups.print();
+            selectedGroups.print();
+            dprintf("\n");
+            if( ! visibleGroups.groups.empty())
+            {
+                if( visibleGroups.groups.size() == 1 )
+                {
+                    list<mglPrimitiveGroup*>::iterator single = visibleGroups.groups.begin();
+                    if( (*single)->min_distance_to( _mouseX, _mouseY ) <= 1 + (int)((*single)->line_width))
+                        select( *single );
+                    else de_select_all();
+                }
+                else // more than 1 groups are visible
+                {
+                    bool found = false;
+//                    for( list<mglPrimitiveGroup*>::iterator it = visibleGroups.groups.begin();
+//                            !visibleGroups.groups.empty(), it != visibleGroups.groups.end(); it++, dprintf("\nFOR LOOP\n") )
+//                            if( (*it)->min_distance_to( _mouseX, _mouseY ) <= 1 + (int)((*it)->line_width))
+//                            {
+//                                select( (*it));
+//                                found = true;
+//                                dprintf("selected ss %s\n", (*it)->name );
+//                            }
+                    list<mglPrimitiveGroup*>::iterator it = visibleGroups.groups.begin();
+//                    list<mglPrimitiveGroup*>::iterator eit = visibleGroups.groups.end();
+//                    dprintf("size: %d\nit:  %x\nend: %x\nback: %x\n", visibleGroups.groups.size(), (*it),(*eit), visibleGroups.groups.back());
+                    do
+                    {
+                            dprintf("WHILE LOOP:\n");
+                            dprintf("it: %x\n*it: %x\nback(): %x\nend(): %x\n\n", it, (*it),
+                                   visibleGroups.groups.back(), visibleGroups.groups.end()); 
+                            float dist = (*it)->min_distance_to( _mouseX, _mouseY );
+                            if( dist <= 1 + (int)((*it)->line_width))
+                            {
+                                select( (*it));
+                                found = true;
+                                dprintf("selected ss %s\n", (*it)->name );
+                            }
+                            else dprintf("checked distance of %s to %d, %d: = %.2f", (*it)->name, _mouseX, _mouseY, dist );
+                            if( (*it) != visibleGroups.groups.back()) it++;
+                    }
+                    while( (*it) != visibleGroups.groups.back());
+                    dprintf("exited the for\n");
+                    if( !found ) de_select_all();
+                }
+            }
+                
         }
 
         else if (button == GLUT_RIGHT_BUTTON) 
@@ -209,7 +281,8 @@ void Mouse(int button, int state, int _mouseX, int _mouseY)
 
         sprintf( x, " Mouse X: %d\n", _mouseX ); 
         sprintf( y, "Mouse Y: %d\n", _mouseY ); 
-        sprintf( dm, "Distance to M: %.2f\n",letter_M.min_distance_to( _mouseX, _mouseY )); 
+        sprintf( dm, "Distance: to M: %.2f; to R:%.2f\n",letter_M.min_distance_to( _mouseX, _mouseY ),
+                letter_R.min_distance_to( _mouseX, _mouseY )); 
 
         char *rstr = strcat( x, y );
         strcpy( info, rstr );
@@ -272,7 +345,7 @@ int main( int argc, char** argv )
 {
     // init
     glutInit( &argc, argv );
-    glutInitDisplayMode( GLUT_SINGLE | GLUT_RGB );
+    glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE );
     glutInitWindowSize( 500, 500 );
     glutInitWindowPosition( 500, 100 );
     glutCreateWindow( "Hello" );

@@ -81,8 +81,10 @@ void mglLine::rotate( float theta, float x_rel, float y_rel )
     
     glRenderMode( GL_FEEDBACK );
     glPushMatrix();
-       glRotatef( theta, x_rel, y_rel, 1 );
-       draw();
+        glTranslatef( -x_rel, -y_rel, 0 );
+        glRotatef( theta, 0, 0, 1 );
+        glTranslatef( x_rel, y_rel, 0 );
+        draw();
     glPopMatrix();
 
     x1 = (int)buff[1];

@@ -85,8 +85,32 @@ void mglPrimitiveGroup::rotate( float theta, float x_rel, float y_rel )
     
     list<mglPrimitive*>::iterator i;
 
+    int center_x = getMinX() + (getMaxX() - getMinX())/2; 
+    int center_y = getMinY() + (getMaxY() - getMinY())/2;
+
     for( i=primitives.begin(); i != primitives.end(); ++i )
-        (*i)->rotate( theta, x_rel, y_rel );
+    {
+//        printf("before 1st move:\n");
+//        print();
+//        (*i)->move( -center_x, -center_y );
+//        printf("after 1st move:\n");
+//        print();
+//        (*i)->rotate( theta, 0, 0 );
+//        printf("after rotation:\n");
+//        print();
+//        (*i)->move(  center_x,  center_y );
+//        printf("after second move:\n");
+//        print();
+
+        (*i)->rotate( theta, center_x, center_y );
+//        glPushMatrix();
+//           glTranslatef( -center_x, -center_y, 0 );
+//           glRotatef( theta, 0, 0, 1 );
+//           glTranslatef( center_x, center_y, 0 );
+//           (*i)->draw();
+//        glPopMatrix();
+//
+    }
     
     glutPostRedisplay();
 }
@@ -98,7 +122,7 @@ void mglPrimitiveGroup::move( int x_dist, int y_dist )
     for( i=primitives.begin(); i != primitives.end(); ++i )
         (*i)->move( x_dist, y_dist );
     
-    glutPostRedisplay();
+    //glutPostRedisplay();
 }
 
 float mglPrimitiveGroup::min_distance_to( int x, int y )
@@ -131,3 +155,62 @@ float mglPrimitiveGroup::max_distance_to( int x, int y )
     return max_distance;
 }
 
+int mglPrimitiveGroup::getMaxX()
+{
+    if( primitives.empty() ) return -1;
+    list<mglPrimitive*>::iterator it = primitives.begin();
+    int maxX = (*it)->getMaxX();
+    ++it;
+    while( it != primitives.end())
+    {
+        if( (*it)->getMaxX() > maxX )
+            maxX = (*it)->getMaxX();
+        ++it;
+    }
+    return maxX;
+}
+
+int mglPrimitiveGroup::getMinX()
+{
+    if( primitives.empty() ) return -1;
+    list<mglPrimitive*>::iterator it = primitives.begin();
+    int minX = (*it)->getMinX();
+    ++it;
+    while( it != primitives.end())
+    {
+        if( (*it)->getMinX() < minX )
+            minX = (*it)->getMinX();
+        ++it;
+    }
+    return minX;
+}
+
+int mglPrimitiveGroup::getMaxY()
+{
+    if( primitives.empty() ) return -1;
+    list<mglPrimitive*>::iterator it = primitives.begin();
+    int maxY = (*it)->getMaxY();
+    ++it;
+    while( it != primitives.end())
+    {
+        if( (*it)->getMaxY() > maxY )
+            maxY = (*it)->getMaxY();
+        ++it;
+    }
+    return maxY;
+}
+
+int mglPrimitiveGroup::getMinY()
+{
+    if( primitives.empty() ) return -1;
+    list<mglPrimitive*>::iterator it = primitives.begin();
+    int minY = (*it)->getMinY();
+    ++it;
+    while( it != primitives.end())
+    {
+        if( (*it)->getMinY() > minY )
+            minY = (*it)->getMinY();
+        ++it;
+    }
+    return minY;
+}

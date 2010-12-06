@@ -92,7 +92,7 @@ void mglGroupManager::draw()
 {
     if( groups.size() == 0 )
     {
-        printf("trying to draw list %x, but list is empty\n", this );
+        //printf("trying to draw list %x, but list is empty\n", this );
         return;
     }
     for( list<mglPrimitiveGroup*>::iterator it = groups.begin();
