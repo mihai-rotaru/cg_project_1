@@ -25,7 +25,8 @@ void mglGroupManager::print()
     //printf("printing...\n");
     printf("mglGroupManager; adr: %x, name = %s, items: %d\n",
             this, name, groups.size());
-    //printf("printed\n");
+    for( list<mglPrimitiveGroup*>::iterator i=groups.begin(); i != groups.end(); ++i )
+        (*i)->print();
 }
 
 void mglGroupManager::add_front( mglPrimitiveGroup* pg )
@@ -38,7 +39,10 @@ void mglGroupManager::add_front( mglPrimitiveGroup* pg )
 
 void mglGroupManager::add_back( mglPrimitiveGroup* pg )
 {
+    printf("  adding %s to %s\n", pg->name, name );
     groups.push_back( pg );
+    printf("   after addition:\n ");
+    print();
 }
 
 void mglGroupManager::remove( mglPrimitiveGroup* pg )

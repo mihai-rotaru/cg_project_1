@@ -45,8 +45,8 @@ void mglLine::draw()
 
 void mglLine::print()
 {
-    printf("   mglLine; name = %s, adr = %x ", name, this );
-    printf(" x1 = %3d, y1 = %3d, x2 = %3d, y2 = %3d\n", x1, y1, x2, y2 );
+    printf("        mglLine; name = %s, adr = %x ", name, this );
+    printf("            x1 = %3d, y1 = %3d, x2 = %3d, y2 = %3d\n", x1, y1, x2, y2 );
 }
 
 void mglLine::scale( float x_dir, float y_dir )

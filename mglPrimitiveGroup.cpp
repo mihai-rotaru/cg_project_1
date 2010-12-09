@@ -41,10 +41,10 @@ mglPrimitiveGroup::~mglPrimitiveGroup()
 
 void mglPrimitiveGroup::print()
 {
-    printf("mglPrimitiveGroup; adr: %x, name = %s, items: %d\n",
+    printf("    mglPrimitiveGroup; adr: %x, name = %s, items: %d\n",
             this, name, primitives.size());
-    for( list<mglPrimitive*>::iterator it = primitives.begin(); it != primitives.end(); ++it )
-        (*it)->print();
+//    for( list<mglPrimitive*>::iterator it = primitives.begin(); it != primitives.end(); ++it )
+//        (*it)->print();
         
 }
 

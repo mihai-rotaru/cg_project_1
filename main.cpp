@@ -30,56 +30,42 @@ char info[256];
 // 2 - rotate
 int current_mode = 0;
 
-void select( mglPrimitiveGroup* prims )
+void select( list<mglPrimitiveGroup*>::iterator& itB )
 {
-    dprintf("--> before selection of %s ( %x )\n", prims->name, prims );
+    dprintf("--> before selection of %s ( %x )\n", (*itB)->name, itB );
     visibleGroups.print();
     selectedGroups.print();
     
-    int k=0;
-    dprintf("size: %d\n", selectedGroups.groups.size());
     if( selectedGroups.groups.size() != 0 )
     {
-        list<mglPrimitiveGroup*>::iterator it = selectedGroups.groups.begin();
+        list<mglPrimitiveGroup*>::iterator itS = selectedGroups.groups.begin();
         do
         {
-            k++;
-            dprintf("\nk = %d\n", k );
-            dprintf("*it: %x\n", (*it));
-            if( (*it) != prims )
+            dprintf("select: *it: %x\n", (*itS));
+            if( *itS != *itB ) //
             {
-                //(*it)->is_selected = false;
-                dprintf("splicing from selected to visible %s\n", (*it)->name);
-                visibleGroups.groups.splice( visibleGroups.groups.begin(), selectedGroups.groups, it );  
-                (*it)->is_selected = false;
+                dprintf("splicing from selected to visible ( de-selecting ) %s\n", (*itS)->name);
+                (*itS)->is_selected = false;
+                visibleGroups.groups.splice( visibleGroups.groups.begin(), selectedGroups.groups, itS );  
                 visibleGroups.print();
                 selectedGroups.print();
             }
-            if( !selectedGroups.groups.empty()) it++;
+            if( !selectedGroups.groups.empty()) itS++;
             else break;
         }
-        while( it != selectedGroups.groups.end());
+        while( itS != selectedGroups.groups.end());
     }
             
-    if( selectedGroups.groups.size() != 0 )
+    if( !selectedGroups.groups.empty() )
     {
-        printf("%s is already selected\n", prims->name );
+        ++itB;
+        printf("%s is already selected\n", (*itB)->name );
         return;
     }
             
-    // find prims in visible and transfer to selected
-    list<mglPrimitiveGroup*>::iterator iprim = visibleGroups.groups.begin();
-    while( *iprim != prims )
-        ++iprim;
-
-    if( *iprim != prims )
-        printf(" ERROR: cannot find %s in visibleGroups\n", prims->name );
-    else // iprim is an iterator pointing to prims in visibleGroups
-    {
-        dprintf("splicing from visible to selected: %s\n", (*iprim)->name);
-        selectedGroups.groups.splice( selectedGroups.groups.begin(),visibleGroups.groups, iprim );  
-        (*iprim)->is_selected = true;
-    }
+    dprintf("splicing from visible to selected: %s\n", (*itB)->name);
+    (*itB)->is_selected = true;
+    selectedGroups.groups.splice( selectedGroups.groups.begin(),visibleGroups.groups, itB );  
 
     dprintf("--> after selection\n");
     visibleGroups.print();
@@ -159,10 +145,10 @@ void init( void )
     letter_R.add_line( 350, 200, 250, 200 );
     letter_R.add_line( 250, 200, 350, 100 );
     
-    visibleGroups.add_front( &letter_M );
-    visibleGroups.add_front( &letter_R );
+    visibleGroups.add_back( &letter_M );
+    visibleGroups.add_back( &letter_R );
 
-    select( &letter_M );
+    //select( &letter_M ); // will have to overload 'select' to support this
     tab_next = visibleGroups.groups.begin();
 }
 
@@ -194,17 +180,17 @@ void myKeyboardFunc (unsigned char key, int x, int y)
 		exit(0);
 		break;
     case 9: // TAB
-        printf("tab_next 1: %s ( %x )\n", (*tab_next)->name, *tab_next);
-        select( *tab_next );
-        printf("selected %s\n", (*tab_next)->name );
-        visibleGroups.print();
-        printf("*tab_next: %x\n", *tab_next );
-        printf("visibleGroups.groups.begin(): %x\n", *(visibleGroups.groups.begin()));
-        printf("visibleGroups.groups.end(): %x\n", *(visibleGroups.groups.end()));
+//        printf("tab_next 1: %s ( %x )\n", (*tab_next)->name, *tab_next);
+        select( tab_next );
+//        printf("selected %s\n", (*tab_next)->name );
+//        visibleGroups.print();
+//        printf("*tab_next: %x\n", *tab_next );
+//        printf("visibleGroups.groups.begin(): %x\n", *(visibleGroups.groups.begin()));
+//        printf("visibleGroups.groups.end(): %x\n", *(visibleGroups.groups.end()));
         if( !visibleGroups.groups.empty())
             if( visibleGroups.groups.size() == 1 ) tab_next = visibleGroups.groups.begin();
             else tab_next++;
-        printf("tab_next 2: %s ( %x )\n", (*tab_next)->name, *tab_next );
+//        printf("tab_next 2: %s ( %x )\n", (*tab_next)->name, *tab_next );
         break;
 
 	}
@@ -219,7 +205,7 @@ void Mouse(int button, int state, int _mouseX, int _mouseY)
     {
         if (button == GLUT_LEFT_BUTTON)
         {
-            dprintf("ON CLICK:\n");
+            dprintf("\n\nON CLICK:\n");
             visibleGroups.print();
             selectedGroups.print();
             dprintf("\n");
@@ -229,39 +215,36 @@ void Mouse(int button, int state, int _mouseX, int _mouseY)
                 {
                     list<mglPrimitiveGroup*>::iterator single = visibleGroups.groups.begin();
                     if( (*single)->min_distance_to( _mouseX, _mouseY ) <= 1 + (int)((*single)->line_width))
-                        select( *single );
+                        select( single );
                     else de_select_all();
                 }
                 else // more than 1 groups are visible
                 {
                     bool found = false;
-//                    for( list<mglPrimitiveGroup*>::iterator it = visibleGroups.groups.begin();
-//                            !visibleGroups.groups.empty(), it != visibleGroups.groups.end(); it++, dprintf("\nFOR LOOP\n") )
-//                            if( (*it)->min_distance_to( _mouseX, _mouseY ) <= 1 + (int)((*it)->line_width))
-//                            {
-//                                select( (*it));
-//                                found = true;
-//                                dprintf("selected ss %s\n", (*it)->name );
-//                            }
                     list<mglPrimitiveGroup*>::iterator it = visibleGroups.groups.begin();
-//                    list<mglPrimitiveGroup*>::iterator eit = visibleGroups.groups.end();
-//                    dprintf("size: %d\nit:  %x\nend: %x\nback: %x\n", visibleGroups.groups.size(), (*it),(*eit), visibleGroups.groups.back());
+                    dprintf( "about to enter thw WHILE loop; visibleGroups.groups.size() = %d\n", visibleGroups.groups.size());
                     do
                     {
-                            dprintf("WHILE LOOP:\n");
-                            dprintf("it: %x\n*it: %x\nback(): %x\nend(): %x\n\n", it, (*it),
+                            dprintf("\nWHILE LOOP: it: %x *it: %x\n", it, *it );
+                            dprintf("front():%x\nit:     %x\n*it:    %x\nback(): %x\nend():  %x\n\n",
+                                    visibleGroups.groups.front(),
+                                    it, (*it),
                                    visibleGroups.groups.back(), visibleGroups.groups.end()); 
+                            dprintf("checking distance of %s to %d, %d...\n", (*it)->name, _mouseX, _mouseY );
                             float dist = (*it)->min_distance_to( _mouseX, _mouseY );
                             if( dist <= 1 + (int)((*it)->line_width))
                             {
-                                select( (*it));
+                                select( it ); // select is responasble for updating 'it'
                                 found = true;
                                 dprintf("selected ss %s\n", (*it)->name );
                             }
-                            else dprintf("checked distance of %s to %d, %d: = %.2f", (*it)->name, _mouseX, _mouseY, dist );
-                            if( (*it) != visibleGroups.groups.back()) it++;
+                            dprintf("checked distance of %s to %d, %d: = %.2f\n", (*it)->name, _mouseX, _mouseY, dist );
+                            dprintf("iterator: %x, adress: %x\n", it, *it );
+                            dprintf("incrementing the iterator...\n");
+                            it++;
+                            dprintf("iterator: %x, adress: %x\n", it, *it );
                     }
-                    while( (*it) != visibleGroups.groups.back());
+                    while( it != visibleGroups.groups.end() && !found );
                     dprintf("exited the for\n");
                     if( !found ) de_select_all();
                 }
@@ -271,7 +254,7 @@ void Mouse(int button, int state, int _mouseX, int _mouseY)
 
         else if (button == GLUT_RIGHT_BUTTON) 
         {
-            letter_R.line_width-=1;
+            letter_R.line_width+=1;
         }
 
         char *x = new char[20];
