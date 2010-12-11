@@ -26,6 +26,7 @@ public:
     virtual void draw();
     virtual void print();
     virtual float distance_to( int, int );
+    virtual void scale( int, int, float, float );
     virtual void scale( float, float );
     virtual void rotate( float, float, float );
     virtual void move( int, int );

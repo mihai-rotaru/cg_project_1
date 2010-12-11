@@ -180,17 +180,10 @@ void myKeyboardFunc (unsigned char key, int x, int y)
 		exit(0);
 		break;
     case 9: // TAB
-//        printf("tab_next 1: %s ( %x )\n", (*tab_next)->name, *tab_next);
         select( tab_next );
-//        printf("selected %s\n", (*tab_next)->name );
-//        visibleGroups.print();
-//        printf("*tab_next: %x\n", *tab_next );
-//        printf("visibleGroups.groups.begin(): %x\n", *(visibleGroups.groups.begin()));
-//        printf("visibleGroups.groups.end(): %x\n", *(visibleGroups.groups.end()));
         if( !visibleGroups.groups.empty())
             if( visibleGroups.groups.size() == 1 ) tab_next = visibleGroups.groups.begin();
             else tab_next++;
-//        printf("tab_next 2: %s ( %x )\n", (*tab_next)->name, *tab_next );
         break;
 
 	}
@@ -278,44 +271,33 @@ void Mouse(int button, int state, int _mouseX, int _mouseY)
 
 GLvoid window_special_key(int key, int x, int y) 
 {    
-    switch (key) 
-    {    
-        case GLUT_KEY_RIGHT: 
-            if( current_mode == 0 ) selectedGroups.move( 10,0 );
-	    else if( current_mode == 1 ) selectedGroups.scale( 1.1,1.0 );
-	    else if( current_mode == 2 ) selectedGroups.rotate( 5,0,0 );
-	    else current_mode = 0;
-            glutPostRedisplay();
+    switch( current_mode )
+    {
+        case 0: // NORMAL MODE
+            switch( key )
+            {
+                case GLUT_KEY_RIGHT: selectedGroups.move( 10,  0 ); break;
+                case GLUT_KEY_LEFT:  selectedGroups.move(-10,  0 ); break;
+                case GLUT_KEY_UP:    selectedGroups.move(  0, 10 ); break;
+                case GLUT_KEY_DOWN:  selectedGroups.move(  0,-10 ); break;
+            }
             break;
-
-	case GLUT_KEY_LEFT: 
-	     if( current_mode == 0 ) selectedGroups.move( -10,0 );
-	     else if( current_mode == 1 ) selectedGroups.scale( 0.9,1.0 );
-	     else if( current_mode == 2 ) selectedGroups.rotate( -5,0,0 );
-	     else current_mode = 0;
-             glutPostRedisplay();
-             break;
-	
-        case GLUT_KEY_UP:
-	     if( current_mode == 0 ) selectedGroups.move( 0, 10 );
-	     else if( current_mode == 1 ) selectedGroups.scale( 1.0, 1.1 );
-	     else if( current_mode == 2 ) selectedGroups.rotate( 5,0,0 );
-	     else current_mode = 0;
-	     glutPostRedisplay();
-	     break;
-	
-	case GLUT_KEY_DOWN:
-	     if( current_mode == 0 ) selectedGroups.move( 0, -10 );
-	     else if( current_mode == 1 ) selectedGroups.scale( 1.0 ,0.9 );
-	     else if( current_mode == 2 ) selectedGroups.rotate( -5,0,0 );
-	     else current_mode = 0;
-	     glutPostRedisplay();
-	     break;
-    
-  default:
-    //printf ("Pressing %d doesn't do anything.\n", key);
-    break;
-  }
+        case 1: // SCALE
+            switch( key )
+            {
+                case GLUT_KEY_RIGHT: selectedGroups.scale( 1.1, 1.0 ); break;
+                case GLUT_KEY_LEFT:  selectedGroups.scale( 0.9, 1.0 ); break;
+                case GLUT_KEY_UP:    selectedGroups.scale( 1.0, 1.1 ); break;
+                case GLUT_KEY_DOWN:  selectedGroups.scale( 1.0, 0.9 ); break;
+            }
+            break;
+       case 2: // ROTATE
+            switch( key )
+            {
+                case GLUT_KEY_RIGHT: selectedGroups.rotate(  3, 0, 0 ); break;
+                case GLUT_KEY_LEFT:  selectedGroups.rotate( -3, 0, 0 ); break;
+            }
+    }
 }
 
 

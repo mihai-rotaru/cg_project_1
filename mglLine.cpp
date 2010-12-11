@@ -49,8 +49,36 @@ void mglLine::print()
     printf("            x1 = %3d, y1 = %3d, x2 = %3d, y2 = %3d\n", x1, y1, x2, y2 );
 }
 
+void mglLine::scale( int rel_x, int rel_y, float x_dir, float y_dir )
+{
+    GLfloat* buff = new GLfloat[5];
+    glFeedbackBuffer( 5, GL_2D, buff );
+    dprintf("before scaling: x1=%d, y1=%d, x2=%d, y2=%d\n", x1, y1, x2, y2 ); 
+    
+    glRenderMode( GL_FEEDBACK );
+    glPushMatrix();
+       glScalef( x_dir, y_dir, 1 );
+       draw();
+    glPopMatrix();
+
+    //int xdiff = (int)buff[1] - x1;
+    //int ydiff = (int)buff[2] - y1;
+    x1 = ((int)buff[1] );
+    y1 = ((int)buff[2] );
+    x2 = ((int)buff[3] );
+    y2 = ((int)buff[4] );
+
+    delete[] buff;
+    dprintf("after scaling:  x1=%d, y1=%d, x2=%d, y2=%d\n", x1, y1, x2, y2 ); 
+    
+    char mstr[20];
+    itoa( x1, mstr, 10 );
+    PrintText( 50,50, mstr );
+}
+
 void mglLine::scale( float x_dir, float y_dir )
 {
+    //dprintf("before scaling: x1=%d, y1=%d, x2=%d, y2=%d\n", x1, y1, x2, y2 ); 
     GLfloat* buff = new GLfloat[5];
     glFeedbackBuffer( 5, GL_2D, buff );
     
@@ -67,6 +95,7 @@ void mglLine::scale( float x_dir, float y_dir )
 
     delete[] buff;
     
+    //dprintf("after scaling:  x1=%d, y1=%d, x2=%d, y2=%d\n", x1, y1, x2, y2 ); 
     char mstr[20];
     itoa( x1, mstr, 10 );
     PrintText( 50,50, mstr );

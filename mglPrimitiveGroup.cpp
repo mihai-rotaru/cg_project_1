@@ -70,13 +70,37 @@ void mglPrimitiveGroup::draw()
     glutPostRedisplay();
 }
 
-void mglPrimitiveGroup::scale( float x_dir, float y_dir )
+void mglPrimitiveGroup::scale( int rel_x, int rel_y, float x_dir, float y_dir )
 {
     list<mglPrimitive*>::iterator i;
 
     for( i=primitives.begin(); i != primitives.end(); ++i )
+        (*i)->scale( rel_x, rel_y, x_dir, y_dir );
+
+    glutPostRedisplay();
+}
+
+void mglPrimitiveGroup::scale( float x_dir, float y_dir )
+{
+    list<mglPrimitive*>::iterator i;
+    dprintf("scaling: rel_x: %d, rel_y: %d\n", getMinX(), getMinY());
+
+    int mx = getMinX();
+    int my = getMinY();
+    int My = getMaxY();
+    
+    dprintf("before scaling: %s: maxX: %d, maxY: %d, minX: %d, minY: %d\n",
+            name, getMaxX(), getMaxY(), getMinX(), getMinY());
+    for( i=primitives.begin(); i != primitives.end(); ++i )
         (*i)->scale( x_dir, y_dir );
 
+    dprintf("after scaling %s:   maxX: %d, maxY: %d, minX: %d, minY: %d\n",
+            name, getMaxX(), getMaxY(), getMinX(), getMinY());
+    move( -(getMinX() - mx ), -(getMinY() - my ));
+    //move( 0, (getMinY()) );
+
+    dprintf("after moving %s:    maxX: %d, maxY: %d, minX: %d, minY: %d\n",
+            name, getMaxX(), getMaxY(), getMinX(), getMinY());
     glutPostRedisplay();
 }
 
@@ -90,18 +114,6 @@ void mglPrimitiveGroup::rotate( float theta, float x_rel, float y_rel )
 
     for( i=primitives.begin(); i != primitives.end(); ++i )
     {
-//        printf("before 1st move:\n");
-//        print();
-//        (*i)->move( -center_x, -center_y );
-//        printf("after 1st move:\n");
-//        print();
-//        (*i)->rotate( theta, 0, 0 );
-//        printf("after rotation:\n");
-//        print();
-//        (*i)->move(  center_x,  center_y );
-//        printf("after second move:\n");
-//        print();
-
         (*i)->rotate( theta, center_x, center_y );
 //        glPushMatrix();
 //           glTranslatef( -center_x, -center_y, 0 );
@@ -208,7 +220,7 @@ int mglPrimitiveGroup::getMinY()
     ++it;
     while( it != primitives.end())
     {
-        if( (*it)->getMinY() > minY )
+        if( (*it)->getMinY() < minY )
             minY = (*it)->getMinY();
         ++it;
     }

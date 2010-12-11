@@ -26,6 +26,7 @@ public:
 
     void draw();
     void scale( float, float );
+    void scale( int, int, float, float );
     void rotate( float, float, float );
     void move( int, int );
     float min_distance_to( int, int );
