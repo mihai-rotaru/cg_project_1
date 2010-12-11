@@ -16,6 +16,14 @@
 #include "mgl_util.h"
 using namespace std;
 
+// version and build numbers
+// these two variables will be correctly set just before
+// the build in a temp copy of this file, which will be used
+// in the compilation process. Therefore, their value shouldn't
+// be modified by hand and their values left <unknown>
+char VERSION[20] = "<unknown>";
+char BUILD_NAME[70] = "<unknown>";
+
 mglGroupManager visibleGroups("visibleGroups");
 mglGroupManager selectedGroups("selectedGroups");
 mglGroupManager hiddenGroups;
@@ -109,6 +117,8 @@ void display( void )
     glClear( GL_COLOR_BUFFER_BIT );
 
     PrintText( 20, 50, info );
+    PrintText( 10, glutGet( GLUT_WINDOW_HEIGHT ) - 15, VERSION );
+    PrintText( 10, glutGet( GLUT_WINDOW_HEIGHT ) - 26, BUILD_NAME );
 
     visibleGroups.draw();
     selectedGroups.draw();
