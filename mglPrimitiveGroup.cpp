@@ -113,16 +113,7 @@ void mglPrimitiveGroup::rotate( float theta, float x_rel, float y_rel )
     int center_y = getMinY() + (getMaxY() - getMinY())/2;
 
     for( i=primitives.begin(); i != primitives.end(); ++i )
-    {
         (*i)->rotate( theta, center_x, center_y );
-//        glPushMatrix();
-//           glTranslatef( -center_x, -center_y, 0 );
-//           glRotatef( theta, 0, 0, 1 );
-//           glTranslatef( center_x, center_y, 0 );
-//           (*i)->draw();
-//        glPopMatrix();
-//
-    }
     
     glutPostRedisplay();
 }

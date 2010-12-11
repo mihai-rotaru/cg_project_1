@@ -103,16 +103,14 @@ void mglLine::scale( float x_dir, float y_dir )
 
 void mglLine::rotate( float theta, float x_rel, float y_rel )
 {
-    dprintf("theta: %.2f, x_rel: %.2f, y_rel: %.2f\n", theta, x_rel, y_rel );
-
     GLfloat* buff = new GLfloat[5];
     glFeedbackBuffer( 5, GL_2D, buff );
     
     glRenderMode( GL_FEEDBACK );
     glPushMatrix();
-        glTranslatef( -x_rel, -y_rel, 0 );
-        glRotatef( theta, 0, 0, 1 );
         glTranslatef( x_rel, y_rel, 0 );
+        glRotatef( theta, 0, 0, 1 );
+        glTranslatef( -x_rel, -y_rel, 0 );
         draw();
     glPopMatrix();
 

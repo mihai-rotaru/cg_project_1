@@ -21,7 +21,7 @@ using namespace std;
 // the build in a temp copy of this file, which will be used
 // in the compilation process. Therefore, their value shouldn't
 // be modified by hand and their values left <unknown>
-char VERSION[20] = "<unknown>";
+char VERSION[30] = "<unknown>";
 char BUILD_NAME[70] = "<unknown>";
 
 mglGroupManager visibleGroups("visibleGroups");

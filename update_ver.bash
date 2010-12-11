@@ -11,7 +11,7 @@
 
 declare file=main.cpp
 declare makefile=makefile
-declare create_inspection_files=false
+declare create_inspection_files=true
 
 # executable name
 declare EXE_NAME=main
@@ -60,7 +60,7 @@ sed -i -e "s/EXECUTABLE=.*/EXECUTABLE=$EXE_NAME.exe/" $makefile
 MinGW32-make
 
 # create a copy of the modified file, for inspection
-if $create_inspection_files;
+if $create_inspection_files
 then
     cp $file $file.tmp.~
     cp $makefile $makefile.tmp.~
