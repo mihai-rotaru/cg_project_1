@@ -12,3 +12,20 @@ I chose to develop this small project on Windows, using MinGW tools for
 compiling/linking, gVim for editing source code files, and MSysGit for
 version control. The project is hosted at github (https://github.com/mihai-rotaru/cg_project_1 )
 A build system isn't employed yet, but I'm thinking of waf ( http://code.google.com/p/waf/ )
+
+As of commit 13d33adb, I began using MinGW32-make for building, since the
+number of files increased and managing them became tedious.
+
+Notes on compiling
+==================
+To build this project you will need to tell the compiler where to find the
+freeglut headers and binaries. You can see from the makefile that I puth the
+headers in C:\MinGW\freeglut, and the binary ( freeglut.dll ) is kept in the
+working directory ( in the same folder as the resulting executable ). I
+obtained these files from this zip:
+http://www.martinpayne.me.uk/software/development/GLUT/freeglut-MinGW.zip
+
+Notes on the executables
+========================
+In order to run the executables, you will need to have freeglut.dll in the
+same folder as the executable, or in a system folder ( such as Windows\System32 ) 
