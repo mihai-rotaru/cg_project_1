@@ -4,18 +4,18 @@ X render two characters
 X translation
 X rotation
 X scaling
-  changing colors
+X changing colors
 X selection ( using slicing - make visible )
   shapes get truncated
-  scaling - rel. to lower-left corner of prim.
-  rotating - rel. to center of prim.
-  show box
+X scaling - rel. to lower-left corner of prim.
+X rotating - rel. to center of prim.
+  show bounding box, and allow dragging the margins
   when rotating, show rotating center
   rotating center can be moved ( keys / mouse )
   mouse wheel scales rel. to centre
   anti-aliasing
   double-buffering
-  mouse selection
+X mouse selection
 X tab selection
   actions ( undo ) 
   mouse over - highlight hovered objects

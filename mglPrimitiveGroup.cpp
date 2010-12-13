@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
+extern bool colour_cycling;
 
 mglPrimitiveGroup::mglPrimitiveGroup()
 {
@@ -56,9 +57,12 @@ void mglPrimitiveGroup::add_line( int x1, int y1, int x2, int y2 )
 
 void mglPrimitiveGroup::draw()
 {
+    if( !colour_cycling )
     is_selected ?
-        glColor3f( selected_colour.Red, selected_colour.Green, selected_colour.Blue ):
-        glColor3f( default_colour.Red, default_colour.Green, default_colour.Blue );
+        glColor3f( selected_color.Red, selected_color.Green, selected_color.Blue ):
+        glColor3f( color.Red, color.Green, color.Blue );
+    else
+        glColor3f( color.Red, color.Green, color.Blue );
     
     glLineWidth( line_width );
 

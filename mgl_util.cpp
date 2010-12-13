@@ -94,4 +94,9 @@ mglColor3f brighter( int percentage, float& R, float& G, float& B )
     return retval;
 }
 
-
+void cycle_frame( int& current_frame, int max_frames )
+{
+    current_frame == max_frames ?
+        current_frame = 1 :
+        current_frame++;
+}

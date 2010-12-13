@@ -29,6 +29,30 @@ mglGroupManager selectedGroups("selectedGroups");
 mglGroupManager hiddenGroups;
 list<mglPrimitiveGroup*>::iterator tab_next;
 
+bool colour_cycling = false;
+int frame = 1;
+
+const GLfloat colors[][3] = {
+  { 255.0/255.0,   0.0/255.0,   0.0/255.0},
+  { 128.0/255.0,   0.0/255.0,   0.0/255.0},
+  { 205.0/255.0,   0.0/255.0,   0.0/255.0},
+  {   0.0/255.0, 255.0/255.0,   0.0/255.0},
+  {   0.0/255.0, 128.0/255.0,   0.0/255.0},
+  {   0.0/255.0, 205.0/255.0,   0.0/255.0},
+  {   0.0/255.0,   0.0/255.0, 255.0/255.0},
+  {   0.0/255.0,   0.0/255.0, 128.0/255.0},
+  {   0.0/255.0,   0.0/255.0, 205.0/255.0},
+  { 255.0/255.0, 255.0/255.0,   0.0/255.0},
+  { 128.0/255.0, 128.0/255.0,   0.0/255.0},
+  { 205.0/255.0, 205.0/255.0,   0.0/255.0},
+  {   0.0/255.0, 255.0/255.0, 255.0/255.0},
+  {   0.0/255.0, 128.0/255.0, 128.0/255.0},
+  {   0.0/255.0, 205.0/255.0, 205.0/255.0},
+  { 255.0/255.0,   0.0/255.0, 255.0/255.0},
+  { 128.0/255.0,   0.0/255.0, 128.0/255.0},
+  { 205.0/255.0,   0.0/255.0, 205.0/255.0},
+};
+
 mglPrimitiveGroup letter_M( "M" ), letter_R( "R" );
 char info[256];
 
@@ -171,6 +195,25 @@ void myReshape( int nWidht, int nHeight )
     glutPostRedisplay();
 }
 
+void myTimer( int value )
+{
+    if( colour_cycling )
+    {
+        list<mglPrimitiveGroup*>::iterator it;
+        for( it = selectedGroups.groups.begin();
+                it != selectedGroups.groups.end();
+                ++it )
+        {
+            dprintf("changing color for %s; frame = %d\n", (*it)->name, frame );
+            (*it)->color.Red   = colors[ frame ][0];
+            (*it)->color.Green = colors[ frame ][1];
+            (*it)->color.Blue  = colors[ frame ][2];
+        }
+        cycle_frame( frame, 18 );
+    }
+    glutTimerFunc( 200, myTimer, 0 );
+}
+
 void myKeyboardFunc (unsigned char key, int x, int y)
 {
 	switch (key) {
@@ -186,6 +229,10 @@ void myKeyboardFunc (unsigned char key, int x, int y)
 		current_mode = 2;
 		glutPostRedisplay();
 		break;
+    case 'c':
+        colour_cycling = !colour_cycling;
+        glutPostRedisplay();
+        break;
 	case 27:			// Escape key
 		exit(0);
 		break;
@@ -304,8 +351,8 @@ GLvoid window_special_key(int key, int x, int y)
        case 2: // ROTATE
             switch( key )
             {
-                case GLUT_KEY_RIGHT: selectedGroups.rotate(  3, 0, 0 ); break;
-                case GLUT_KEY_LEFT:  selectedGroups.rotate( -3, 0, 0 ); break;
+                case GLUT_KEY_RIGHT: selectedGroups.rotate( -3, 0, 0 ); break;
+                case GLUT_KEY_LEFT:  selectedGroups.rotate(  3, 0, 0 ); break;
             }
     }
 }
@@ -332,6 +379,7 @@ int main( int argc, char** argv )
     glutKeyboardFunc( myKeyboardFunc );
     glutMouseFunc( Mouse );
     glutReshapeFunc( myReshape );
+    glutTimerFunc( 200, myTimer, 0 );
 
     glutMainLoop();
     return 0;   // ANSI C requires main to return int.

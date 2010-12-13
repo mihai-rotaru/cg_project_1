@@ -14,5 +14,6 @@ float distance( float, float, float, float );
 float shortest_distance(float x, float y, float x1, float y1, float x2, float y2);
 int dprintf( char const * __restrict fmt, ... );
 mglColor3f brighter( int, float&, float&, float& );
+void cycle_frame( int&, int );
 
 #endif
