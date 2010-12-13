@@ -233,6 +233,24 @@ void myKeyboardFunc (unsigned char key, int x, int y)
         colour_cycling = !colour_cycling;
         glutPostRedisplay();
         break;
+    case ']':
+        {
+        list<mglPrimitiveGroup*>::iterator it;
+        for( it = selectedGroups.groups.begin();
+                it != selectedGroups.groups.end();
+                ++it )
+            (*it)->line_width++;
+        }
+        break;
+    case '[':
+        {
+        list<mglPrimitiveGroup*>::iterator it;
+        for( it = selectedGroups.groups.begin();
+                it != selectedGroups.groups.end();
+                ++it )
+            (*it)->line_width--;
+        }
+        break;
 	case 27:			// Escape key
 		exit(0);
 		break;
@@ -304,7 +322,7 @@ void Mouse(int button, int state, int _mouseX, int _mouseY)
 
         else if (button == GLUT_RIGHT_BUTTON) 
         {
-            letter_R.line_width+=1;
+//            letter_R.line_width+=1;
         }
 
         char *x = new char[20];
